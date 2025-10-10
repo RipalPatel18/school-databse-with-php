@@ -18,10 +18,10 @@
 
 foreach($schools as $school){
   echo $school['School Name'] . 
-  '<form>
-      <input type="hidden" name="id" value="' . $school['id'] . '">
-      <input type="submit" value="Edit">
-    </form><br>';
+ '<form action ="editschool.php" method="GET">
+ <input type= "hidden" name= "id" value= " ' . $school['id'] . '">
+ <input type= "submit" value="submit">
+ </form>'
 }
 
 
