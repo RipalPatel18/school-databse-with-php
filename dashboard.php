@@ -1,37 +1,26 @@
-<?php
-
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
-
-
-require 'connect.php';
-?>
+<?php require 'auth.php'; ?>
+<?php require 'connect.php'; ?>
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"><title>Dashboard</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8"><title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="p-5">
-    <h1>Welcome, <?php echo htmlspecialchars($_SESSION['name']); ?>!</h1>
-    <p>Email: <?php echo htmlspecialchars($_SESSION['email']); ?></p>
-    <?php if (!empty($_SESSION['image'])): ?>
-        <p><img src="uploads/users/<?php echo htmlspecialchars($_SESSION['image']); ?>" alt="Profile Image" width="100" style="border-radius: 50%;"></p>
+<body class="p-4">
+  <?php include 'nav.php'; ?>
+  <div class="container">
+    <h1>Welcome, <?= htmlspecialchars($_SESSION['user']['name']) ?>!</h1>
+    <p class="text-muted">Email: <?= htmlspecialchars($_SESSION['user']['email']) ?></p>
+    <?php if (!empty($_SESSION['user']['image'])): ?>
+      <img src="uploads/users/<?= htmlspecialchars($_SESSION['user']['image']) ?>" width="100" style="border-radius:50%;">
     <?php endif; ?>
-    
-    <h3 class="mt-4">Management Links</h3>
+
     <hr>
-    <p>
-        <a href="users.php" class="btn btn-info">Manage Users (CRUD)</a> | 
-        <a href="schools_list.php" class="btn btn-info">Manage Schools</a> |
-        <a href="index.php" class="btn btn-secondary">Public Schools Index</a>
-    </p>
-    <p class="mt-4">
-        <a href="logout.php" class="btn btn-danger">Logout</a>
-    </p>
+    <div class="d-flex gap-2">
+      <a class="btn btn-primary" href="users.php">Manage Users</a>
+      <a class="btn btn-secondary" href="schools_list.php">Manage Schools</a>
+      <a class="btn btn-outline-dark" href="index.php">Public Schools Index</a>
+    </div>
+  </div>
 </body>
 </html>
